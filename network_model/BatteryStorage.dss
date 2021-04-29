@@ -1,0 +1,6 @@
+! energy systems 1ph
+new storage.battery1 phases=1 Bus1=32.3 kV=2.4 kWrated=10 kWhrated=40 state=idling dispmode=external %EffCharge=100 %EffDischarge=100 %IdlingkW=0 %IdlingkVar=0 %stored=50
+new storage.battery2 phases=1 Bus1=85.3 kV=2.4 kWrated=15 kWhrated=60 state=idling dispmode=external %EffCharge=100 %EffDischarge=100 %IdlingkW=0 %IdlingkVar=0 %stored=50
+new storage.battery3 phases=1 Bus1=75.3 kV=2.4 kWrated=20 kWhrated=80 state=idling dispmode=external %EffCharge=100 %EffDischarge=100 %IdlingkW=0 %IdlingkVar=0 %stored=50
+new storage.battery4 phases=1 Bus1=90.2 kV=2.4 kWrated=10 kWhrated=40 state=idling dispmode=external %EffCharge=100 %EffDischarge=100 %IdlingkW=0 %IdlingkVar=0 %stored=50
+new storage.battery5 phases=1 Bus1=46.1 kV=2.4 kWrated=15 kWhrated=60 state=idling dispmode=external %EffCharge=100 %EffDischarge=100 %IdlingkW=0 %IdlingkVar=0 %stored=50

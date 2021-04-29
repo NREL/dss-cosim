@@ -1,0 +1,7 @@
+! pv systems 1ph
+new generator.pv1 bus1=17.3 conn=wye phases=1 kV=2.4 kW=10 kVA=11 pf=1 !yearly=pvshape
+new generator.pv2 bus1=43.2 conn=wye phases=1 kV=2.4 kW=15 kVA=16.5 pf=1 !yearly=pvshape
+new generator.pv3 bus1=33.1 conn=wye phases=1 kV=2.4 kW=20 kVA=22 pf=1 !yearly=pvshape
+new generator.pv4 bus1=111.1 conn=wye phases=1 kV=2.4 kW=10 kVA=11 pf=1 !yearly=pvshape
+new generator.pv5 bus1=104.3 conn=wye phases=1 kV=2.4 kW=50 kVA=55 pf=1 !yearly=pvshape
+

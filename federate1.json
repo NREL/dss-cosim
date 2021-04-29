@@ -1,0 +1,14 @@
+{
+  "coreType": "zmq",
+  "loglevel": 6,
+  "name": "federate1",
+  "publications": [
+    {
+      "global": true,
+      "key": "topicA",
+      "required": true,
+      "type": "double"
+    }
+  ],
+  "timeDelta": 1.0
+}

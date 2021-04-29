@@ -1,0 +1,14 @@
+{
+  "coreType": "zmq",
+  "loglevel": 6,
+  "name": "DSSfederate",
+  "subscriptions": [
+    {
+      "global": true,
+      "key": "topicA",
+      "required": true,
+      "type": "double"
+    }
+  ],
+  "timeDelta": 1.0
+}

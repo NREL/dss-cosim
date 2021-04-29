@@ -1,0 +1,20 @@
+
+Redirect Master.dss
+
+!New Monitor.Load1 element=load.S1a terminal=1 mode=1 ppolar=no
+
+!Set mode=yearly stepsize=60m number=24
+
+solve
+
+!export monitor Load1 
+
+!plot profile phases=all
+
+!addbusmarker bus=610 code=36 color=red size=3 
+
+redirect addbusmarker.dss
+
+plot circuit
+
+export voltages

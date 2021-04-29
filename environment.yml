@@ -1,0 +1,12 @@
+name: dss_cosim
+dependencies:
+ - python
+ - pandas
+ - helics==2.2
+ - pip
+ - pip:
+    - git+https://github.com/GMLC-TDC/helics-cli.git@python-master#egg=helics-cli
+    - git+https://github.com/NREL/OpenDSS-wrapper#egg=OpenDSS-wrapper
+channels:
+  - defaults
+  - gmlc-tdc

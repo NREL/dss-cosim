@@ -13,9 +13,13 @@ os.makedirs(ResultsDir, exist_ok=True)
 
 # Output files
 load_info_file = os.path.join(ResultsDir, 'load_info.csv')
+pv_info_file = os.path.join(ResultsDir, 'pv_info.csv')
 main_results_file = os.path.join(ResultsDir, 'main_results.csv')
 voltage_file = os.path.join(ResultsDir, 'voltage_results.csv')
 elements_file = os.path.join(ResultsDir, 'element_results.csv')
+pv_powers_results_file = os.path.join(ResultsDir, 'pv_powers_results.csv')
+soc_results_file = os.path.join(ResultsDir, 'soc_results.csv')
+test_file = os.path.join(ResultsDir, 'test_file.csv')
 
 # Create federate
 fed = h.helicsCreateCombinationFederateFromConfig(
@@ -42,12 +46,16 @@ dss.run_command('set controlmode=time')
 # Get info on all properties of a class
 df = dss.get_all_elements('Load')
 df.to_csv(load_info_file)
+df = dss.get_all_elements(element='Generator')
+df.to_csv(pv_info_file)
 
 """ Execute Federate, set up and start co-simulation """
 h.helicsFederateEnterExecutingMode(fed)
 main_results = []
 voltage_results = []
 element_results = []
+pv_powers_results = []
+soc_results = []
 times = pd.date_range(start_time, freq=stepsize, end=start_time + duration)
 for step, current_time in enumerate(times):
 
@@ -80,11 +88,11 @@ for step, current_time in enumerate(times):
         dss.set_power(pv_name, element='Generator', p=set_point)
 
     for storage_name, set_point in storage_powers.items():
-        dss.set_power(storage_name, element='Storage', p=set_point)
+        dss.set_power(storage_name, element='Storage', p=-set_point)
 
     # solve OpenDSS network model
     dss.run_dss()
-
+      
     """ Get outputs for the feeder, all voltages, and individual element voltage and power """
     main_results.append(dss.get_circuit_info())
 
@@ -101,11 +109,27 @@ for step, current_time in enumerate(times):
         'Line Voltage (p.u.)': dss.get_voltage('L15', element='Line', average=True),
         'Load Voltage (p.u.)': dss.get_voltage('S10a', element='Load', average=True),
     })
+    
+    # get pv data
+    pv_powers_data = {}
+    for pv_name in pv_powers:
+        pv_powers_data.update({pv_name: dss.get_power(pv_name, element='Generator', total=True)[0]})    
+    pv_powers_results.append(pv_powers_data)
+
+    # get storage data
+    storage_data = dss.get_all_elements(element='Storage')
+    storage_soc= {}
+    for idx, row in storage_data.iterrows():        
+        storage_soc.update({idx.replace('Storage.',''): row['%stored']})    
+    soc_results.append(storage_soc)
+    
 
 """ Save results files """
 pd.DataFrame(main_results).to_csv(main_results_file)
 pd.DataFrame(voltage_results).to_csv(voltage_file)
 pd.DataFrame(element_results).to_csv(elements_file)
+pd.DataFrame(pv_powers_results).to_csv(pv_powers_results_file)
+pd.DataFrame(soc_results).to_csv(soc_results_file)
 
 # finalize and close the federate
 h.helicsFederateFinalize(fed)
